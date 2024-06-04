@@ -4,7 +4,7 @@ _id: ID!
 username: String!
 name: String!
 password: String!
-ProfilePicture: String
+profilePicture: String
 gender: String!
 }
 
