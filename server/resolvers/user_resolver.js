@@ -5,7 +5,6 @@ const userResolver = {
   Query: {
     users: () => users,
   },
-  Mutation: {},
 };
 
 export default userResolver;

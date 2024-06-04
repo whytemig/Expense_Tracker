@@ -1,5 +1,8 @@
 const transactionResolver = {
-  Quer: {},
+  Query: {
+    transactions: () => {},
+    transaction: () => {},
+  },
   Mutation: {},
 };
 

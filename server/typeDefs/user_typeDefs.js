@@ -37,7 +37,7 @@ input LoginInput{
     password: String!
 }
 
-input LogoutResponse{
+type LogoutResponse{
     #send back a feedback message
     message: String!
 }

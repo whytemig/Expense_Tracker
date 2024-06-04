@@ -10,7 +10,7 @@ type Transaction{
     location:String
 }
 type Query{
-    transaction:[Transaction!]!
+    transactions:[Transaction!]!
     transaction(transactionId:ID):Transaction
 }
 type Mutation{
