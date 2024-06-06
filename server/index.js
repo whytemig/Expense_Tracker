@@ -8,6 +8,8 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import mergedResolvers from "./resolvers/mergeIndex.js";
 import mergedTypes from "./typeDefs/mergeIndex.js";
+//MONGO
+import connectDB from "./database/_db.js";
 
 import dotenv from "dotenv";
 
@@ -35,5 +37,5 @@ await server.start();
 app.use("/", cors(), express.json(), expressMiddleware(server));
 
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-
-console.log(`🚀 Server ready at http://localhost:4000/`);
+await connectDB();
+await console.log(`🚀 Server ready at http://localhost:4000/`);
