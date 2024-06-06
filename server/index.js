@@ -9,6 +9,10 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import mergedResolvers from "./resolvers/mergeIndex.js";
 import mergedTypes from "./typeDefs/mergeIndex.js";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 // Required logic for integrating with Express
 const app = express();
 // Our httpServer handles incoming requests to our Express app.
