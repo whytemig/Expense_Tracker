@@ -1,14 +1,35 @@
+//SERVER
+import express from "express";
+import http from "http";
+import cors from "cors";
+//APOLLO
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
-import userTypeDefs from "./typeDefs/user_typeDefs.js";
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import mergedResolvers from "./resolvers/mergeIndex.js";
 import mergedTypes from "./typeDefs/mergeIndex.js";
 
+// Required logic for integrating with Express
+const app = express();
+// Our httpServer handles incoming requests to our Express app.
+// Below, we tell Apollo Server to "drain" this httpServer,
+// enabling our servers to shut down gracefully.
+const httpServer = http.createServer(app);
+
+// Same ApolloServer initialization as before, plus the drain plugin
+// for our httpServer.
 const server = new ApolloServer({
   typeDefs: mergedTypes,
   resolvers: mergedResolvers,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
-const { url } = await startStandaloneServer(server);
+// Note you must call `start()` on the `ApolloServer`
+// instance before passing the instance to `expressMiddleware`
+await server.start();
 
-console.log(`server at ${url}`);
+app.use("/", cors(), express.json(), expressMiddleware(server));
+
+await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+
+console.log(`🚀 Server ready at http://localhost:4000/`);
