@@ -34,6 +34,11 @@ Passport is authentication middleware for Node.js. Extremely flexible and modula
 Passport session acts as a middleware to alter the req object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.
 "
 
-Understanding passport serialize deserialize
+Understanding passport serialize & deserialize.
 
-""
+"SerializeUser determines which data of the user object should be stored in the session. The result of the serializeUser method is attached to the session as req.session.passport.user = {}
+
+DeserializeUser corresponds to the key of the user object that was given to the done function (see 1.). So your whole object is retrieved with help of that key. That key here is the user id (key can be any key of the user object i.e. name,email etc). In deserializeUser that key is matched with the in memory array / database or any data resource.
+
+The fetched object is attached to the request object as req.user
+"
