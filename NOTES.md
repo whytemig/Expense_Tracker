@@ -17,3 +17,23 @@ About Express-session
 "
 Express-session is an HTTP server-side framework that can be used to create and manage a session middlewar
 "
+Persisting session data
+
+"
+Store session data in a database is the most recommended method for authentification.
+"
+
+Passport.js
+
+"
+PASSPORT
+Passport is authentication middleware for Node.js. Extremely flexible and modular, Passport can be unobtrusively dropped into any Express-based web application."
+
+"
+
+Passport session acts as a middleware to alter the req object and change the 'user' value that is currently the session id (from the client cookie) into the true deserialized user object.
+"
+
+Understanding passport serialize deserialize
+
+""
