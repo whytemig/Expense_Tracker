@@ -22,6 +22,7 @@ dotenv.config();
 
 // Required logic for integrating with Express
 const app = express();
+
 // Our httpServer handles incoming requests to our Express app.
 // Below, we tell Apollo Server to "drain" this httpServer,
 // enabling our servers to shut down gracefully.
@@ -79,4 +80,4 @@ app.use(
 
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 await connectDB();
-await console.log(`🚀 Server ready at http://localhost:4000/`);
+console.log(`🚀 Server ready at http://localhost:4000/`);
