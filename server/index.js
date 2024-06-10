@@ -17,6 +17,8 @@ import connectDB from "./database/_db.js";
 //GRAPHQL-PASSPORT
 import { buildContext } from "graphql-passport";
 import dotenv from "dotenv";
+//import without variable for side effects only
+import "./passport/passport.js";
 
 dotenv.config();
 
