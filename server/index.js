@@ -17,7 +17,6 @@ import connectDB from "./database/_db.js";
 //GRAPHQL-PASSPORT
 import { buildContext } from "graphql-passport";
 import dotenv from "dotenv";
-import User from "./database/models/user_models.js";
 
 import passportInitialize from "./passport/passport.js";
 
@@ -64,7 +63,7 @@ const server = new ApolloServer({
   resolvers: mergedResolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   context: ({ req, res }) => {
-    buildContext({ req, res, User });
+    buildContext({ req, res });
   },
 });
 

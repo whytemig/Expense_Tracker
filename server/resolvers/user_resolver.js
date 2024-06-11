@@ -5,10 +5,23 @@ import bcrypt from "bcryptjs";
 // resolvers for the User
 const userResolver = {
   Query: {
-    authUser: () => {},
-    users: () => users,
-    user: (_, { userId }) => {
-      return users.find((us) => us._id === userId);
+    authUser: async (_, __, context) => {
+      try {
+        const user = await context.getUser();
+        return user;
+      } catch (error) {
+        throw new Error("Error in Auth", error.message);
+        console.log(error.message);
+      }
+    },
+    user: async (_, { userId }) => {
+      try {
+        const user = await User.findById(userId);
+        return user;
+      } catch (error) {
+        throw new Error("Error in getting an User by Id", error.message);
+        console.log(error.message);
+      }
     },
   },
   Mutation: {

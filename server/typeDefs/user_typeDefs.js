@@ -9,8 +9,6 @@ gender: String!
 }
 
 type Query{
-    #query for users 
-    users:[User!]!
     #query for authUsers
     authUser: User
     #query a single user
