@@ -17,9 +17,11 @@ import connectDB from "./database/_db.js";
 //GRAPHQL-PASSPORT
 import { buildContext } from "graphql-passport";
 import dotenv from "dotenv";
-//import without variable for side effects only
-import "./passport/passport.js";
+import User from "./database/models/user_models.js";
 
+import passportInitialize from "./passport/passport.js";
+
+passportInitialize();
 dotenv.config();
 
 // Required logic for integrating with Express
@@ -62,7 +64,7 @@ const server = new ApolloServer({
   resolvers: mergedResolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   context: ({ req, res }) => {
-    buildContext({ req, res });
+    buildContext({ req, res, User });
   },
 });
 

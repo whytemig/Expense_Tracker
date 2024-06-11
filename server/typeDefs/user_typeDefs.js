@@ -17,7 +17,7 @@ type Query{
     user(userId:ID): User
 }
 
-type mutation{
+type Mutation{
     signup(input: SignupInput!): User
     login(input: LoginInput!): User
     logout: LogoutResponse
