@@ -7,6 +7,12 @@ const userResolver = {
   Query: {
     authUser: async (_, __, context) => {
       try {
+        // Check if the user is authenticated
+        const authUser = await context.getUser();
+
+        if (!authUser) {
+          throw new Error("Not authenticated!");
+        }
         const user = await context.getUser();
         return user;
       } catch (error) {
