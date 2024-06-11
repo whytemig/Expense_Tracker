@@ -9,15 +9,13 @@ gender: String!
 }
 
 type Query{
-    #query for users 
-    users:[User!]!
     #query for authUsers
     authUser: User
     #query a single user
     user(userId:ID): User
 }
 
-type mutation{
+type Mutation{
     signup(input: SignupInput!): User
     login(input: LoginInput!): User
     logout: LogoutResponse

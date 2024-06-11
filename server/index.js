@@ -16,7 +16,10 @@ import mergedTypes from "./typeDefs/mergeIndex.js";
 import connectDB from "./database/_db.js";
 //GRAPHQL-PASSPORT
 import { buildContext } from "graphql-passport";
+
 import dotenv from "dotenv";
+
+import passportInitialize from "./passport/passport.js";
 
 dotenv.config();
 
@@ -55,13 +58,13 @@ app.use(passport.session());
 
 // Same ApolloServer initialization as before, plus the drain plugin
 // for our httpServer.
+passportInitialize();
+
 const server = new ApolloServer({
   typeDefs: mergedTypes,
   resolvers: mergedResolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  context: ({ req, res }) => {
-    buildContext({ req, res });
-  },
+  context: ({ req, res }) => buildContext({ req, res }),
 });
 
 // Note you must call `start()` on the `ApolloServer`
@@ -69,15 +72,18 @@ const server = new ApolloServer({
 await server.start();
 
 app.use(
-  "/",
+  "/graphql",
   cors({
     origin: "http://localhost:4000",
     credentials: true,
   }),
   express.json(),
-  expressMiddleware(server)
+  expressMiddleware(server, {
+    context: async ({ req, res }) => buildContext({ req, res }),
+  })
 );
 
-await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 await connectDB();
-console.log(`🚀 Server ready at http://localhost:4000/`);
+httpServer.listen(4000, () => {
+  console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+});

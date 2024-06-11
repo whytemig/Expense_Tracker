@@ -21,7 +21,7 @@ const userModel = new Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "feemale", "other"],
+      enum: ["male", "female", "other"],
     },
   },
   {
