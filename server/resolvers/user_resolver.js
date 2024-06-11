@@ -1,4 +1,3 @@
-import passport from "passport";
 import User from "../database/models/user_models.js";
 import bcrypt from "bcryptjs";
 
@@ -9,24 +8,25 @@ const userResolver = {
       try {
         // Check if the user is authenticated
         const authUser = await context.getUser();
-
+        console.log(authUser);
         if (!authUser) {
           throw new Error("Not authenticated!");
         }
-        const user = await context.getUser();
-        return user;
+
+        return authUser;
       } catch (error) {
-        throw new Error("Error in Auth", error.message);
         console.log(error.message);
+        throw new Error("Error in Auth", error.message);
       }
     },
-    user: async (_, { userId }) => {
+
+    user: async (_, { userId }, context) => {
       try {
         const user = await User.findById(userId);
         return user;
       } catch (error) {
-        throw new Error("Error in getting an User by Id", error.message);
         console.log(error.message);
+        throw new Error("Error in getting an User by Id", error.message);
       }
     },
   },
@@ -62,10 +62,8 @@ const userResolver = {
 
         await newUser.save();
 
-        await context.login("grapgh-local", {
-          newUser,
-        });
-        console.log(newUser);
+        await context.login(newUser);
+
         return newUser;
       } catch (error) {
         console.log(error.message);
@@ -77,10 +75,16 @@ const userResolver = {
       const { username, password } = input;
 
       try {
+        if (!username || !password) throw new Error("All fields are required");
         const { user } = await context.authenticate("graphql-local", {
           username,
           password,
         });
+
+        if (!user) {
+          throw new Error("Invalid credentials");
+        }
+
         await context.login(user);
         return user;
       } catch (error) {
@@ -94,7 +98,7 @@ const userResolver = {
         context.req.session.destroy((err) => {
           if (err) throw new Error(err);
         });
-        context.res.session.clearCookie();
+        context.res.clearCookie("connect.sid");
         return { message: "Log out Successfully" };
       } catch (error) {
         console.log(error.message);

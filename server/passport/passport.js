@@ -4,40 +4,43 @@ import passport from "passport";
 import bcrypt from "bcryptjs";
 
 async function passportInitialize() {
+  passport.serializeUser((user, done) => {
+    // console.log("Serialization");
+    console.log(user.id);
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(async (id, done) => {
+    // console.log("Deserializing user");
+    try {
+      const user = await User.findById(id);
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  });
+
   passport.use(
     new GraphQLLocalStrategy(async (username, password, done) => {
       try {
-        const findUser = await User.findOne({ username });
+        const user = await User.findOne({ username });
 
-        if (!findUser) {
+        if (!user) {
           return done(null, false, { message: "Invalid Credentials" });
         }
 
-        const comparePassword = await bcrypt.compare(
-          password,
-          findUser.password
-        );
+        const comparePassword = await bcrypt.compare(password, user?.password);
 
         if (!comparePassword) {
           return done(null, false, { message: "Invalid Credentials" });
         }
 
-        return done(null, findUser);
+        return done(null, user);
       } catch (error) {
         return done(error);
       }
     })
   );
-
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user);
-    });
-  });
 }
 
 export default passportInitialize;
