@@ -18,7 +18,7 @@ const transactionModel = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["savings", "expense", "assest"],
+      enum: ["savings", "expense", "asset"],
       required: true,
     },
     amount: {
@@ -27,7 +27,7 @@ const transactionModel = new mongoose.Schema(
     },
     location: {
       type: String,
-      default: "N/A",
+      default: "Not Available",
     },
     date: {
       type: Date,

@@ -33,7 +33,7 @@ const transactionResolver = {
   },
   Mutation: {
     createTransaction: async (_, { input }, context) => {
-      const userId = await context.getUser._id;
+      const userId = await context.getUser()._id;
       try {
         const newTransaction = new Transaction({
           description: input.description,
@@ -42,7 +42,7 @@ const transactionResolver = {
           amount: input.amount,
           date: input.date,
           location: input.location,
-          userId: userId,
+          userId,
         });
         await newTransaction.save();
         return newTransaction;
