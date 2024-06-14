@@ -1,8 +1,23 @@
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import Home from "./components/Home";
+import UserInterface from "./components/UserInterface";
+import Transactions from "./components/Transactions";
+import TransactionPage from "./components/TransactionPage";
+
 function App() {
   return (
-    <h1 className="h-screen bg-opacity-50 bg-slate-900 text-9xl text-white flex justify-center items-center">
-      <div className="bg-red/30 p-4 backdrop-blur-sm">Hello </div>
-    </h1>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+
+      <Route path="/" element={<Home />}>
+        <Route index element={<UserInterface />} />
+        <Route path="/transaction" element={<Transactions />} />
+        <Route path="/transaction/:id" element={<TransactionPage />} />
+      </Route>
+    </Routes>
   );
 }
 
