@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-import Home from "./components/Home";
-import UserInterface from "./components/UserInterface";
-import Transactions from "./components/Transactions";
-import TransactionPage from "./components/TransactionPage";
+import Login from "./components/pages/Login";
+import SignUp from "./components/pages/SignUp";
+import Home from "./components/pages/Home";
+import UserInterface from "./components/pages/UserInterface";
+import Transactions from "./components/pages/Transactions";
+import TransactionPage from "./components/pages/TransactionPage";
 
 function App() {
   return (
