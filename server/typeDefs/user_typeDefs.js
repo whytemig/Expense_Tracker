@@ -3,6 +3,7 @@ type User{
 _id: ID!
 username: String!
 name: String!
+email: String!
 password: String!
 profilePicture: String
 gender: String!
@@ -24,6 +25,7 @@ type Mutation{
 input SignupInput{
     username:String!
     name:String!
+    email:String!
     password:String!
     #generate an auto-pic with an API
     #research an API for that.

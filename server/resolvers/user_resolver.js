@@ -32,13 +32,20 @@ const userResolver = {
   },
   Mutation: {
     signup: async (_, { input }, context) => {
-      const { username, password, gender, name } = input;
+      const { username, password, gender, name, email } = input;
       try {
-        if (!username || !name || !password || !gender) {
+        if (!username || !name || !password || !gender || !email) {
           throw new Error("All fields are Required!");
         }
 
-        const findUser = await User.findOne({ username });
+        const emailExpression =
+          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        const isValidEmail = emailExpression.test(String(email).toLowerCase());
+
+        if (!isValidEmail) throw new Error("Inproper email value");
+
+        const findUser = await User.findOne({ username, email });
 
         if (findUser) {
           throw new Error("User already exist!");
@@ -57,6 +64,7 @@ const userResolver = {
           name,
           password: hashPass,
           gender,
+          email,
           profilePicture: gender === "male" ? boyAvatar : girlAvatar,
         });
 
