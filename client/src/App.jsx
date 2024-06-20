@@ -5,6 +5,7 @@ import Home from "./components/pages/Home";
 import UserInterface from "./components/pages/UserInterface";
 import Transactions from "./components/pages/Transactions";
 import TransactionPage from "./components/pages/TransactionPage";
+import ErrorPage from "./components/pages/ErrorPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/transaction" element={<Transactions />} />
         <Route path="/transaction/:id" element={<TransactionPage />} />
       </Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }
