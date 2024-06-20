@@ -5,6 +5,7 @@ export default {
     extend: {
       backgroundImage: {
         home: "url('/images/pennies-bg.jpg')",
+        login: "url(/images/counting.jpg)",
       },
     },
   },
