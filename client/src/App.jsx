@@ -18,9 +18,20 @@ function App() {
         path="/"
         element={<Auth isAuthenticated={authUser} element={Home} />}
       >
-        <Route index element={<UserInterface />} />
-        <Route path="/transaction" element={<Transactions />} />
-        <Route path="/transaction/:id" element={<TransactionPage />} />
+        <Route
+          index
+          element={<Auth isAuthenticated={authUser} element={UserInterface} />}
+        />
+        <Route
+          path="/transaction"
+          element={<Auth isAuthenticated={authUser} element={Transactions} />}
+        />
+        <Route
+          path="/transaction/:id"
+          element={
+            <Auth isAuthenticated={authUser} element={TransactionPage} />
+          }
+        />
       </Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>
