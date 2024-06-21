@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 function Home() {
   return (
     <div className="bg-home h-screen flex flex-col">
-      <header className="py-3 text-slate-100 bg-slate-950 sticky top-0 z-10">
+      <header className="py-3 text-slate-900 bg-slate-200 sticky top-0 z-10">
         NAV BAR
       </header>
       <div className="bg-no-repeat bg-cover bg-center bg-home bg-fixed flex-grow flex-col ">
@@ -11,7 +11,7 @@ function Home() {
           <Outlet />
         </div>
       </div>
-      <footer className="py-3 bg-slate-950 text-slate-100 flex-shrink-0">
+      <footer className="py-3 bg-slate-200 text-slate-900 bottom-0">
         FOOTER
       </footer>
     </div>
