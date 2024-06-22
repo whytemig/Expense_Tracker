@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { SIGNUP_USER } from "../../graphql/mutations/signup_mutation";
+import toast from "react-hot-toast";
 
 function SignUp() {
   const [signUpData, setSignUpData] = useState({
@@ -12,7 +13,8 @@ function SignUp() {
     gender: "",
   });
   const [signup, { loading }] = useMutation(SIGNUP_USER, {
-    refetchQueries: ["GetAuthUser"],
+    // refetching the data by the user that has been authenticated.
+    // refetchQueries: ["authUser"],
   });
 
   //function that aquire the input value
@@ -27,20 +29,42 @@ function SignUp() {
 
   //submit the input values to the apollo server
   async function handleSubmit(e) {
+    const { name, username, email, password, gender } = signUpData;
     e.preventDefault();
+    if (!name || !username || !email || !password || !gender) {
+      toast.error("Requires all fields");
+    }
+
+    const emailExpression = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const isValidEmail = emailExpression.test(String(email).toLowerCase());
+
+    if (!isValidEmail) toast.error("Inproper email value");
+
     try {
       await signup({
         variables: {
           input: signUpData,
         },
       });
+
+      toast.success("Signed Up");
+
+      setSignUpData({
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+        gender: "",
+      });
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   }
 
   return (
-    <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed h-screen">
+    <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed min-h-full">
       <div className="bg-slate-900 opacity-95 h-screen w-full relative"></div>
       <div className="  min-h-screen justify-center items-center flex absolute top-0 left-0 right-0 bottom-0">
         <div className="max-w-md w-full p-6 px-8 bg-white rounded-lg shadow-lg">
@@ -64,7 +88,6 @@ function SignUp() {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Fullname"
-                required
               />
             </div>
             <div className="mb-6">
@@ -83,6 +106,7 @@ function SignUp() {
                 autoComplete="on"
                 placeholder="Enter your Email"
                 onChange={handleChange}
+                value={signUpData.email}
                 required
               />
             </div>
@@ -101,6 +125,7 @@ function SignUp() {
                 autoComplete="on"
                 placeholder="Enter your Username"
                 onChange={handleChange}
+                value={signUpData.username}
                 required
               />
             </div>
@@ -116,6 +141,7 @@ function SignUp() {
                 id="gender"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 onChange={handleChange}
+                value={signUpData.gender}
               >
                 <option defaultValue>Please choose an option</option>
                 <option value="male">Male</option>
@@ -137,6 +163,7 @@ function SignUp() {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 placeholder="Enter your password"
                 onChange={handleChange}
+                value={signUpData.password}
                 required
               />
             </div>
@@ -149,8 +176,11 @@ function SignUp() {
                 <p>Login In</p>
               </Link>
             </div>
-            <button className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-slate-600 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 uppercase">
-              Sign Up
+            <button
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-slate-600 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 uppercase"
+              disabled={loading}
+            >
+              {loading ? "Loading" : "Sign Up"}
             </button>
           </form>
         </div>
