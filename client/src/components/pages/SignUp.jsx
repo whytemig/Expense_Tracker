@@ -1,12 +1,18 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { SIGNUP_USER } from "../../graphql/mutations/signup_mutation";
 
 function SignUp() {
   const [signUpData, setSignUpData] = useState({
     name: "",
     username: "",
+    email: "",
     password: "",
     gender: "",
+  });
+  const [signup, { loading }] = useMutation(SIGNUP_USER, {
+    refetchQueries: ["GetAuthUser"],
   });
 
   //function that aquire the input value
@@ -19,6 +25,20 @@ function SignUp() {
     });
   }
 
+  //submit the input values to the apollo server
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await signup({
+        variables: {
+          input: signUpData,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed h-screen">
       <div className="bg-slate-900 opacity-95 h-screen w-full relative"></div>
@@ -27,7 +47,7 @@ function SignUp() {
           <h1 className="text-4xl font-bold text-center text-slate-900 mt-8 mb-6">
             Sign Up
           </h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label
                 htmlFor="name"
@@ -97,9 +117,7 @@ function SignUp() {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 onChange={handleChange}
               >
-                <option value="" disabled>
-                  Please choose an option
-                </option>
+                <option defaultValue>Please choose an option</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
