@@ -1,15 +1,77 @@
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { SIGNUP_USER } from "../../graphql/mutations/signup_mutation";
+import toast from "react-hot-toast";
 
 function SignUp() {
+  const [signUpData, setSignUpData] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+    gender: "",
+  });
+  const [signup, { loading }] = useMutation(SIGNUP_USER, {
+    // refetching the data by the user that has been authenticated.
+    // refetchQueries: ["authUser"],
+  });
+
+  //function that aquire the input value
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    //set the value of the inputs
+    setSignUpData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
+
+  //submit the input values to the apollo server
+  async function handleSubmit(e) {
+    const { name, username, email, password, gender } = signUpData;
+    e.preventDefault();
+    if (!name || !username || !email || !password || !gender) {
+      toast.error("Requires all fields");
+    }
+
+    const emailExpression = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const isValidEmail = emailExpression.test(String(email).toLowerCase());
+
+    if (!isValidEmail) toast.error("Inproper email value");
+
+    try {
+      await signup({
+        variables: {
+          input: signUpData,
+        },
+      });
+
+      toast.success("Signed Up");
+
+      setSignUpData({
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+        gender: "",
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
-    <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed h-screen">
+    <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed min-h-full">
       <div className="bg-slate-900 opacity-95 h-screen w-full relative"></div>
       <div className="  min-h-screen justify-center items-center flex absolute top-0 left-0 right-0 bottom-0">
         <div className="max-w-md w-full p-6 px-8 bg-white rounded-lg shadow-lg">
           <h1 className="text-4xl font-bold text-center text-slate-900 mt-8 mb-6">
             Sign Up
           </h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label
                 htmlFor="name"
@@ -19,11 +81,13 @@ function SignUp() {
               </label>
               <input
                 id="name"
+                name="name"
                 type="text"
+                value={signUpData.name}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Fullname"
-                required
               />
             </div>
             <div className="mb-6">
@@ -35,11 +99,14 @@ function SignUp() {
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Email"
+                onChange={handleChange}
+                value={signUpData.email}
                 required
               />
             </div>
@@ -52,10 +119,13 @@ function SignUp() {
               </label>
               <input
                 id="username"
+                name="username"
                 type="text"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Username"
+                onChange={handleChange}
+                value={signUpData.username}
                 required
               />
             </div>
@@ -70,8 +140,10 @@ function SignUp() {
                 name="gender"
                 id="gender"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
+                onChange={handleChange}
+                value={signUpData.gender}
               >
-                <option value="">Please choose an option</option>
+                <option defaultValue>Please choose an option</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
@@ -87,8 +159,11 @@ function SignUp() {
               <input
                 id="password"
                 type="password"
+                name="password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 placeholder="Enter your password"
+                onChange={handleChange}
+                value={signUpData.password}
                 required
               />
             </div>
@@ -101,8 +176,11 @@ function SignUp() {
                 <p>Login In</p>
               </Link>
             </div>
-            <button className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-slate-600 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 uppercase">
-              Sign Up
+            <button
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-slate-600 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 uppercase"
+              disabled={loading}
+            >
+              {loading ? "Loading" : "Sign Up"}
             </button>
           </form>
         </div>
