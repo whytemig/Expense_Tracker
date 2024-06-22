@@ -1,6 +1,24 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function SignUp() {
+  const [signUpData, setSignUpData] = useState({
+    name: "",
+    username: "",
+    password: "",
+    gender: "",
+  });
+
+  //function that aquire the input value
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    //set the value of the inputs
+    setSignUpData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
+
   return (
     <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed h-screen">
       <div className="bg-slate-900 opacity-95 h-screen w-full relative"></div>
@@ -19,7 +37,10 @@ function SignUp() {
               </label>
               <input
                 id="name"
+                name="name"
                 type="text"
+                value={signUpData.name}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Fullname"
@@ -35,11 +56,13 @@ function SignUp() {
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Email"
+                onChange={handleChange}
                 required
               />
             </div>
@@ -52,10 +75,12 @@ function SignUp() {
               </label>
               <input
                 id="username"
+                name="username"
                 type="text"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Username"
+                onChange={handleChange}
                 required
               />
             </div>
@@ -70,8 +95,11 @@ function SignUp() {
                 name="gender"
                 id="gender"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
+                onChange={handleChange}
               >
-                <option value="">Please choose an option</option>
+                <option value="" disabled>
+                  Please choose an option
+                </option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
@@ -87,8 +115,10 @@ function SignUp() {
               <input
                 id="password"
                 type="password"
+                name="password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 placeholder="Enter your password"
+                onChange={handleChange}
                 required
               />
             </div>

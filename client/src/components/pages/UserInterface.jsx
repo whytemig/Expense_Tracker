@@ -1,10 +1,4 @@
 function UserInterface() {
-  /*    description:String!
-    paymentType:String!
-    category:String!
-    amount:Float!
-    date:String!
-    location:String*/
   return (
     <div className="text-slate-300 flex flex-col">
       <div className="text-6xl text-center p-4">
