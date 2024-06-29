@@ -10,7 +10,9 @@ function Login() {
     password: "",
   });
 
-  const [login, { loading }] = useMutation(LOGINUSER_USER);
+  const [login, { loading }] = useMutation(LOGINUSER_USER, {
+    refetchQueries: ["AuthUser"],
+  });
 
   //submit the input values to the apollo server
   async function handleSubmit(e) {
