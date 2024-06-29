@@ -1,6 +1,46 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGINUSER_USER } from "../../graphql/mutations/login.mutation";
+import toast from "react-hot-toast";
 
 function Login() {
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [login, { loading }] = useMutation(LOGINUSER_USER);
+
+  //submit the input values to the apollo server
+  async function handleSubmit(e) {
+    const { username, password } = loginData;
+    e.preventDefault();
+    if (!username || !password) {
+      toast.error("Requires all fields");
+      return;
+    }
+    // login functionality
+
+    try {
+      await login({
+        variables: {
+          input: loginData,
+        },
+      });
+
+      toast.success("Signed Up");
+
+      setLoginData({
+        username: "",
+        password: "",
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
     <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed h-screen">
       <div className="bg-slate-900 opacity-95 h-screen w-full relative"></div>
@@ -9,7 +49,7 @@ function Login() {
           <h1 className="text-4xl font-bold text-center text-slate-900 mt-8 mb-4">
             Login
           </h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label
                 htmlFor="username"
@@ -23,7 +63,12 @@ function Login() {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 autoComplete="on"
                 placeholder="Enter your Username"
-                required
+                value={loginData.username}
+                onChange={(e) =>
+                  setLoginData((prev) => {
+                    return { ...prev, username: e.target.value };
+                  })
+                }
               />
             </div>
             <div className="mb-6">
@@ -38,6 +83,12 @@ function Login() {
                 type="password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
                 placeholder="Enter your password"
+                value={loginData.password}
+                onChange={(e) =>
+                  setLoginData((prev) => {
+                    return { ...prev, password: e.target.value };
+                  })
+                }
                 required
               />
             </div>
@@ -50,7 +101,10 @@ function Login() {
                 <p>Register an Account</p>
               </Link>
             </div>
-            <button className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-slate-600 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 uppercase">
+            <button
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-slate-600 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 uppercase"
+              disabled={loading}
+            >
               Login
             </button>
           </form>

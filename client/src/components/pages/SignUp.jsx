@@ -32,14 +32,18 @@ function SignUp() {
     const { name, username, email, password, gender } = signUpData;
     e.preventDefault();
     if (!name || !username || !email || !password || !gender) {
-      toast.error("Requires all fields");
+      throw new Error("Requires all fields");
+      // toast.error("Requires all fields");
     }
 
     const emailExpression = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const isValidEmail = emailExpression.test(String(email).toLowerCase());
 
-    if (!isValidEmail) toast.error("Inproper email value");
+    if (!isValidEmail) {
+      throw new Error("Improper email value");
+      // toast.error("Improper email value");
+    }
 
     try {
       await signup({
