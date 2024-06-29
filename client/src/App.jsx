@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Login from "./components/pages/Login";
 import SignUp from "./components/pages/SignUp";
@@ -7,34 +7,43 @@ import UserInterface from "./components/pages/UserInterface";
 import Transactions from "./components/pages/Transactions";
 import TransactionPage from "./components/pages/TransactionPage";
 import ErrorPage from "./components/pages/ErrorPage";
-import Auth from "./components/auth/Auth";
+import { useQuery } from "@apollo/client";
+import { AUTH_USER } from "./graphql/query/authUser";
 
 function App() {
-  let authUser = false;
+  const { data } = useQuery(AUTH_USER);
+  let authUser;
+
+  authUser = data?.authUser;
+
+  console.log(authUser);
+
   return (
     <>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/login"
+          element={!authUser ? <Login /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/signup"
+          element={!authUser ? <SignUp /> : <Navigate to="/" />}
+        />
         <Route
           path="/"
-          element={<Auth isAuthenticated={authUser} element={Home} />}
+          element={authUser ? <Home /> : <Navigate to="/login" />}
         >
           <Route
             index
-            element={
-              <Auth isAuthenticated={authUser} element={UserInterface} />
-            }
+            element={authUser ? <UserInterface /> : <Navigate to="/login" />}
           />
           <Route
             path="/transaction"
-            element={<Auth isAuthenticated={authUser} element={Transactions} />}
+            element={authUser ? <Transactions /> : <Navigate to="/login" />}
           />
           <Route
             path="/transaction/:id"
-            element={
-              <Auth isAuthenticated={authUser} element={TransactionPage} />
-            }
+            element={authUser ? TransactionPage : <Navigate to="/login" />}
           />
         </Route>
         <Route path="*" element={<ErrorPage />} />

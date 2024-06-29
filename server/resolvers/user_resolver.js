@@ -97,7 +97,7 @@ const userResolver = {
         return user;
       } catch (error) {
         console.log(error.message);
-        throw new Error("Check Resolver or TypeDefs", error.message);
+        throw new Error(error.message);
       }
     },
     logout: async (_, __, context) => {
