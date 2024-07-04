@@ -1,4 +1,7 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
+import { TRANSACTION_MUTATION } from "../../graphql/mutations/transaction.mutation";
+import toast from "react-hot-toast";
 
 function UserInterface() {
   const [transacForm, setTransacForm] = useState({
@@ -10,9 +13,39 @@ function UserInterface() {
     date: "",
   });
 
+  //GRAPHQL FUNC.
+  const [createTransaction, { loading }] = useMutation(TRANSACTION_MUTATION);
+
   //submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let { paymentType, category, description, amount, date } = transacForm;
+
+    if (!paymentType || !category || !description || !amount || !date) {
+      toast.error("These fields are required");
+      return;
+    }
+
+    amount = parseFloat(transacForm?.amount);
+
+    try {
+      await createTransaction({
+        variables: { input: { ...transacForm, amount } },
+      });
+      setTransacForm({
+        paymentType: "",
+        category: "",
+        description: "",
+        amount: "",
+        location: "",
+        date: "",
+      });
+      toast.success("Transaction Successful!");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   // handle change function
@@ -34,7 +67,7 @@ function UserInterface() {
           <h2 className="text-2xl mb-4 text-center">Graph</h2>
           {/* Add chart components or content here */}
         </div>
-        <div className="w-1/3 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6">
+        <div className="min-w-1/3 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6">
           <h2 className="text-2xl mb-4 text-center">Expense/Income:</h2>
           <form className="flex flex-col p-2" onSubmit={handleSubmit}>
             <div className="mb-6">
@@ -52,9 +85,8 @@ function UserInterface() {
                 onChange={handleChangle}
               >
                 <option value="">Please choose an option</option>
-                <option value="savings">Savings</option>
-                <option value="expense">Expense</option>
-                <option value="asset">Asset</option>
+                <option value="cash">Cash</option>
+                <option value="card">Card</option>
               </select>
             </div>
             <div className="mb-6 flex justify-center items-center gap-2">
@@ -93,8 +125,9 @@ function UserInterface() {
                   onChange={handleChangle}
                 >
                   <option value="">Please choose an option</option>
-                  <option value="cash">Cash</option>
-                  <option value="card">Card</option>
+                  <option value="savings">Savings</option>
+                  <option value="expense">Expense</option>
+                  <option value="asset">Asset</option>
                 </select>
               </div>
             </div>
@@ -155,8 +188,9 @@ function UserInterface() {
             <button
               className="w-full px-4 py-2 border rounded-lg bg-lime-700 text-slate-300 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out"
               type="submit"
+              disabled={loading}
             >
-              Submit
+              {loading ? "Loading" : "Submit"}
             </button>
           </form>
         </div>

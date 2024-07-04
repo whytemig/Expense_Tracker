@@ -31,8 +31,6 @@ function Login() {
         },
       });
 
-      toast.success("Login In");
-
       setLoginData({
         username: "",
         password: "",
