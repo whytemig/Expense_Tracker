@@ -8,7 +8,7 @@ const userResolver = {
       try {
         // Check if the user is authenticated
         const authUser = await context.getUser();
-        console.log(authUser);
+        // console.log(authUser);
         if (!authUser) {
           throw new Error("Not authenticated!");
         }

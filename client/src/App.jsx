@@ -11,39 +11,46 @@ import { useQuery } from "@apollo/client";
 import { AUTH_USER } from "./graphql/query/authUser";
 
 function App() {
-  const { data } = useQuery(AUTH_USER);
-  let authUser;
+  const { data, loading } = useQuery(AUTH_USER, {
+    refetchQueries: ["AuthUser"],
+  });
 
-  authUser = data?.authUser;
-
-  console.log(authUser);
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
       <Routes>
         <Route
           path="/login"
-          element={!authUser ? <Login /> : <Navigate to="/" />}
+          element={!data?.authUser ? <Login /> : <Navigate to="/" />}
         />
         <Route
           path="/signup"
-          element={!authUser ? <SignUp /> : <Navigate to="/" />}
+          element={!data?.authUser ? <SignUp /> : <Navigate to="/" />}
         />
         <Route
           path="/"
-          element={authUser ? <Home /> : <Navigate to="/login" />}
+          element={data?.authUser ? <Home /> : <Navigate to="/login" />}
         >
           <Route
             index
-            element={authUser ? <UserInterface /> : <Navigate to="/login" />}
+            element={
+              data?.authUser ? <UserInterface /> : <Navigate to="/login" />
+            }
           />
           <Route
-            path="/transaction"
-            element={authUser ? <Transactions /> : <Navigate to="/login" />}
+            path="/transactions"
+            element={
+              data?.authUser ? <Transactions /> : <Navigate to="/login" />
+            }
           />
           <Route
-            path="/transaction/:id"
-            element={authUser ? TransactionPage : <Navigate to="/login" />}
+            path="/transactions/:id"
+            element={
+              data?.authUser ? <TransactionPage /> : <Navigate to="/login" />
+            }
           />
         </Route>
         <Route path="*" element={<ErrorPage />} />

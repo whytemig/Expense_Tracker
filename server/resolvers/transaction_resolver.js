@@ -11,8 +11,11 @@ const transactionResolver = {
 
       try {
         const userId = await context.getUser._id;
+
         // find the transaction that relates to the User Id of the transaction.
-        const transaction = await Transaction.find({ userId });
+        const transaction = await Transaction.find(userId).sort({
+          createdAt: -1,
+        });
 
         return transaction;
       } catch (error) {
@@ -34,6 +37,8 @@ const transactionResolver = {
   Mutation: {
     createTransaction: async (_, { input }, context) => {
       const userId = await context.getUser()._id;
+
+      console.log(userId);
       try {
         const newTransaction = new Transaction({
           description: input.description,
