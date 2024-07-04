@@ -2,6 +2,8 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { TRANSACTION_MUTATION } from "../../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
+import PieChart from "../chart/PieChart";
+import { GET_TRANSACTIONS } from "../../graphql/query/transaction.query";
 
 function UserInterface() {
   const [transacForm, setTransacForm] = useState({
@@ -14,7 +16,9 @@ function UserInterface() {
   });
 
   //GRAPHQL FUNC.
-  const [createTransaction, { loading }] = useMutation(TRANSACTION_MUTATION);
+  const [createTransaction, { loading }] = useMutation(TRANSACTION_MUTATION, {
+    refetchQueries: [GET_TRANSACTIONS],
+  });
 
   //submit function
   const handleSubmit = async (e) => {
@@ -65,7 +69,7 @@ function UserInterface() {
       <div className="flex justify-between mt-4 p-4">
         <div className="p-4 w-2/3">
           <h2 className="text-2xl mb-4 text-center">Graph</h2>
-          {/* Add chart components or content here */}
+          <PieChart />
         </div>
         <div className="min-w-1/3 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6">
           <h2 className="text-2xl mb-4 text-center">Expense/Income:</h2>

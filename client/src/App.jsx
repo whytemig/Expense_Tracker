@@ -41,13 +41,13 @@ function App() {
             }
           />
           <Route
-            path="/transaction"
+            path="/transactions"
             element={
               data?.authUser ? <Transactions /> : <Navigate to="/login" />
             }
           />
           <Route
-            path="/transaction/:id"
+            path="/transactions/:id"
             element={
               data?.authUser ? <TransactionPage /> : <Navigate to="/login" />
             }
