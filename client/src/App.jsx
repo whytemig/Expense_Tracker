@@ -11,12 +11,14 @@ import { useQuery } from "@apollo/client";
 import { AUTH_USER } from "./graphql/query/authUser";
 
 function App() {
-  const { data } = useQuery(AUTH_USER);
+  const { data, loading } = useQuery(AUTH_USER);
   let authUser;
 
   authUser = data?.authUser;
 
-  console.log(authUser);
+  if (loading) {
+    return null;
+  }
 
   return (
     <>

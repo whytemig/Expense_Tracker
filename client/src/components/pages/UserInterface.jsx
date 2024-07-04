@@ -6,11 +6,11 @@ function UserInterface() {
       </div>
 
       <div className="flex justify-between mt-4 p-4">
-        <div className="w-1/2 p-4">
+        <div className="p-4 w-2/3">
           <h2 className="text-2xl mb-4 text-center">Graph</h2>
           {/* Add chart components or content here */}
         </div>
-        <div className="w-1/2 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg">
+        <div className="w-1/3 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6">
           <h2 className="text-2xl mb-4 text-center">Expense/Income:</h2>
           <form className="flex flex-col p-2">
             <div className="mb-6">
@@ -31,7 +31,6 @@ function UserInterface() {
                 <option value="asset">Asset</option>
               </select>
             </div>
-
             <div className="mb-6 flex justify-center items-center gap-2">
               <div className="w-1/2">
                 <label
@@ -68,7 +67,6 @@ function UserInterface() {
                 </select>
               </div>
             </div>
-
             <div className="mb-6">
               <label
                 htmlFor="location"
@@ -114,13 +112,13 @@ function UserInterface() {
                 required
               />
             </div>
-
             <button
               className="w-full px-4 py-2 border rounded-lg bg-lime-700 text-slate-300 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out"
               type="submit"
             >
               Submit
             </button>
+            kk
           </form>
         </div>
       </div>

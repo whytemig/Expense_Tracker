@@ -31,7 +31,7 @@ function Login() {
         },
       });
 
-      toast.success("Signed Up");
+      toast.success("Login In");
 
       setLoginData({
         username: "",
