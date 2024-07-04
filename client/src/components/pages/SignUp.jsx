@@ -14,7 +14,7 @@ function SignUp() {
   });
   const [signup, { loading }] = useMutation(SIGNUP_USER, {
     // refetching the data by the user that has been authenticated.
-    // refetchQueries: ["authUser"],
+    refetchQueries: ["AuthUser"],
   });
 
   //function that aquire the input value

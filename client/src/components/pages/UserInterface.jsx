@@ -1,4 +1,28 @@
+import { useState } from "react";
+
 function UserInterface() {
+  const [transacForm, setTransacForm] = useState({
+    paymentType: "",
+    category: "",
+    description: "",
+    amount: "",
+    location: "",
+    date: "",
+  });
+
+  //submit function
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+
+  // handle change function
+  const handleChangle = (e) => {
+    const { name, value } = e.target;
+    setTransacForm((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
   return (
     <div className="text-slate-300 flex flex-col">
       <div className="text-6xl text-center p-4">
@@ -12,7 +36,7 @@ function UserInterface() {
         </div>
         <div className="w-1/3 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6">
           <h2 className="text-2xl mb-4 text-center">Expense/Income:</h2>
-          <form className="flex flex-col p-2">
+          <form className="flex flex-col p-2" onSubmit={handleSubmit}>
             <div className="mb-6">
               <label
                 htmlFor="paymentType"
@@ -24,6 +48,8 @@ function UserInterface() {
                 name="paymentType"
                 id="paymentType"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
+                value={transacForm.paymentType}
+                onChange={handleChangle}
               >
                 <option value="">Please choose an option</option>
                 <option value="savings">Savings</option>
@@ -42,10 +68,13 @@ function UserInterface() {
 
                 <input
                   id="amount"
+                  name="amount"
                   type="number"
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
                   autoComplete="on"
                   placeholder="Amount $"
+                  value={transacForm.amount}
+                  onChange={handleChangle}
                   required
                 />
               </div>
@@ -60,6 +89,8 @@ function UserInterface() {
                   name="category"
                   id="category"
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
+                  value={transacForm.category}
+                  onChange={handleChangle}
                 >
                   <option value="">Please choose an option</option>
                   <option value="cash">Cash</option>
@@ -76,9 +107,12 @@ function UserInterface() {
               </label>
               <input
                 id="location"
+                name="location"
                 type="text"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
                 autoComplete="on"
+                value={transacForm.location}
+                onChange={handleChangle}
                 placeholder="Enter a Location"
               />
             </div>
@@ -91,9 +125,12 @@ function UserInterface() {
               </label>
               <textarea
                 id="description"
+                name="description"
                 type="text"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
                 placeholder="Enter a Description"
+                value={transacForm.description}
+                onChange={handleChangle}
                 required
               />
             </div>
@@ -107,8 +144,11 @@ function UserInterface() {
               <input
                 id="date"
                 type="date"
+                name="date"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
                 placeholder="Enter a Description"
+                value={transacForm.date}
+                onChange={handleChangle}
                 required
               />
             </div>
@@ -118,7 +158,6 @@ function UserInterface() {
             >
               Submit
             </button>
-            kk
           </form>
         </div>
       </div>
