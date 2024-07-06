@@ -15,11 +15,10 @@ const PieChart = () => {
         label: "$",
         data: [],
         backgroundColor: [],
-        borderwidth: 3,
-        borderRadius: 3,
+        borderWidth: 1,
+        borderRadius: 5,
         spacing: 10,
         cutout: 130,
-        borderJointStyle: "round",
       },
     ],
   });

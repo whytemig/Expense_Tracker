@@ -13,7 +13,7 @@ function UserInterface() {
       </div>
 
       <div className="flex justify-evenly mt-4 p-4 flex-wrap items-center px-8 my-2">
-        <div className="p-7 w-[420px] flex justify-center items-center">
+        <div className="p-7 w-[520px] md:min-w-[420px] flex justify-center items-center">
           <PieChart />
         </div>
 

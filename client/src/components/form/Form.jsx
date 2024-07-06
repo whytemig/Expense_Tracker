@@ -3,7 +3,10 @@ import { useState } from "react";
 import { TRANSACTION_MUTATION } from "../../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 
-import { GET_TRANSACTIONS } from "../../graphql/query/transaction.query";
+import {
+  GET_CATEGORIES,
+  GET_TRANSACTIONS,
+} from "../../graphql/query/transaction.query";
 
 const Form = () => {
   //state
@@ -18,7 +21,7 @@ const Form = () => {
 
   //GRAPHQL FUNC.
   const [createTransaction, { loading }] = useMutation(TRANSACTION_MUTATION, {
-    refetchQueries: [GET_TRANSACTIONS],
+    refetchQueries: [GET_TRANSACTIONS, GET_CATEGORIES],
   });
 
   //submit function
