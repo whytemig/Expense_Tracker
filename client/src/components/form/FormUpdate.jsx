@@ -1,14 +1,21 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_TRANSACTIONS_BY_ID } from "../../graphql/query/transaction.query";
 import { useEffect, useState } from "react";
+import { UPDATE_TRANSACTION } from "../../graphql/mutations/transaction.mutation";
+import toast from "react-hot-toast";
 
 export const FormUpdate = () => {
   const { id } = useParams();
 
-  const { data, loading } = useQuery(GET_TRANSACTIONS_BY_ID, {
+  //use query for transactions
+  const { data } = useQuery(GET_TRANSACTIONS_BY_ID, {
     variables: { transactionId: id },
   });
+
+  //use mutation for form inputupdate  for mutation
+  const [updateTransaction, { loading: loadingUpdate }] =
+    useMutation(UPDATE_TRANSACTION);
 
   const [formUpdate, setFormUpdate] = useState({
     paymentType: data?.transaction?.paymentType || "",
@@ -21,6 +28,9 @@ export const FormUpdate = () => {
 
   //redender the data upon Mount
   useEffect(() => {
+    const localDate = new Date(+data?.transaction?.date).toLocaleDateString(
+      "en-CA"
+    );
     if (data) {
       setFormUpdate({
         paymentType: data?.transaction?.paymentType,
@@ -29,7 +39,7 @@ export const FormUpdate = () => {
         amount: data?.transaction?.amount,
         location: data?.transaction?.location,
         //convert the milliseconds back into a date input value
-        date: new Date(+data?.transaction?.date).toISOString().substring(0, 10),
+        date: localDate,
       });
     }
   }, [data]);
@@ -42,9 +52,30 @@ export const FormUpdate = () => {
     });
   };
 
+  //handle submit for input values to update database
+  async function handleUpdateValues(e) {
+    e.preventDefault();
+
+    const amount = parseFloat(formUpdate.amount);
+
+    try {
+      await updateTransaction({
+        variables: {
+          input: { transactionId: id, ...formUpdate, amount },
+        },
+      });
+
+      toast.success("Transaction Updated!");
+      setTimeout(() => (window.location.href = "/transactions"), 2000);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
     <div className="max-w-[520px] min-w-[450px] p-6 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6  my-[5%]">
-      <form className="flex flex-col p-2">
+      <form className="flex flex-col p-2" onSubmit={handleUpdateValues}>
         <div className="mb-3">
           <label
             htmlFor="paymentType"
@@ -160,8 +191,9 @@ export const FormUpdate = () => {
         <button
           className="w-full px-4 py-2 border rounded-lg bg-lime-700 text-slate-300 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out mt-3"
           type="submit"
+          disabled={loadingUpdate}
         >
-          {loading ? "Loading".toUpperCase() : "Update".toUpperCase()}
+          {loadingUpdate ? "Loading".toUpperCase() : "Update".toUpperCase()}
         </button>
       </form>
     </div>

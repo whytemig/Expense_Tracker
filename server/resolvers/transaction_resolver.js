@@ -14,7 +14,7 @@ const transactionResolver = {
 
         // find the transaction that relates to the User Id of the transaction.
         const transaction = await Transaction.find(userId).sort({
-          createdAt: -1,
+          updatedAt: -1,
         });
 
         return transaction;
