@@ -24,7 +24,7 @@ const transactionResolver = {
       }
     },
     //GET TRANSACTION BY THE ID
-    transaction: async (_, transactionId) => {
+    transaction: async (_, { transactionId }) => {
       try {
         const transaction = await Transaction.findById(transactionId);
         return transaction;
