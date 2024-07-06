@@ -1,9 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GET_TRANSACTIONS_BY_ID } from "../../graphql/query/transaction.query";
 import { useEffect, useState } from "react";
 import { UPDATE_TRANSACTION } from "../../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
+import { formatDateHelper } from "../../helper/formatDate";
 
 export const FormUpdate = () => {
   const { id } = useParams();
@@ -12,6 +13,8 @@ export const FormUpdate = () => {
   const { data } = useQuery(GET_TRANSACTIONS_BY_ID, {
     variables: { transactionId: id },
   });
+
+  const navigate = useNavigate();
 
   //use mutation for form inputupdate  for mutation
   const [updateTransaction, { loading: loadingUpdate }] =
@@ -28,9 +31,6 @@ export const FormUpdate = () => {
 
   //redender the data upon Mount
   useEffect(() => {
-    const localDate = new Date(+data?.transaction?.date).toLocaleDateString(
-      "en-CA"
-    );
     if (data) {
       setFormUpdate({
         paymentType: data?.transaction?.paymentType,
@@ -39,7 +39,7 @@ export const FormUpdate = () => {
         amount: data?.transaction?.amount,
         location: data?.transaction?.location,
         //convert the milliseconds back into a date input value
-        date: localDate,
+        date: formatDateHelper(+data?.transaction?.date),
       });
     }
   }, [data]);
@@ -61,12 +61,17 @@ export const FormUpdate = () => {
     try {
       await updateTransaction({
         variables: {
-          input: { transactionId: id, ...formUpdate, amount },
+          input: {
+            transactionId: id,
+            ...formUpdate,
+            amount,
+            date: new Date(formUpdate?.date).toISOString(),
+          },
         },
       });
 
       toast.success("Transaction Updated!");
-      setTimeout(() => (window.location.href = "/transactions"), 2000);
+      setTimeout(() => navigate("/transactions"), 2000);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
