@@ -30,3 +30,14 @@ export const GET_TRANSACTIONS_BY_ID = gql`
     }
   }
 `;
+
+//GET TRANSACTION BUT IN AN OBJECT FORMAT FOR CATEGORIES AND AMOUNT
+
+export const GET_CATEGORIES = gql`
+  query Query {
+    categoryTallies {
+      category
+      amount
+    }
+  }
+`;

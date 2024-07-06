@@ -12,13 +12,12 @@ function UserInterface() {
         <button>History</button>
       </div>
 
-      <div className="flex justify-between mt-4 p-4">
-        <div className="p-4 w-2/3">
-          <h2 className="text-2xl mb-4 text-center">Graph</h2>
+      <div className="flex justify-evenly mt-4 p-4 flex-wrap items-center px-8 my-2">
+        <div className="p-7 w-[420px] flex justify-center items-center">
           <PieChart />
         </div>
 
-        <div className="min-w-1/3 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6">
+        <div className="min-w-1/3 p-6 px-8 bg-transparent border border-gray-50 rounded-lg shadow-lg h-5/6 my-2">
           <h2 className="text-2xl mb-4 text-center">Expense/Income:</h2>
           <Form />
         </div>

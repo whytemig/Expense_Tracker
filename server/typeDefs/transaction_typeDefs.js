@@ -9,9 +9,17 @@ type Transaction{
     date:String!
     location:String
 }
+
+type CategoryTally{
+    category:String!
+    amount:Float!
+}
+
+
 type Query{
     transactions:[Transaction!]!
     transaction(transactionId:ID!):Transaction
+    categoryTallies:[CategoryTally]
 }
 type Mutation{
     createTransaction(input: TransactionInput!):Transaction!
