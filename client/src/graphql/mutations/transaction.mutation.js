@@ -37,3 +37,11 @@ export const DELETE_TRANSACTION = gql`
     }
   }
 `;
+
+export const DELETE_ALL_TRANSACTIONS = gql`
+  mutation DeleteAllTransactions {
+    deleteAllTransactions {
+      message
+    }
+  }
+`;

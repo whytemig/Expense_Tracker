@@ -1,6 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
-import { GET_TRANSACTIONS_BY_ID } from "../../graphql/query/transaction.query";
+import {
+  GET_CATEGORIES,
+  GET_TRANSACTIONS,
+  GET_TRANSACTIONS_BY_ID,
+} from "../../graphql/query/transaction.query";
 import { useEffect, useState } from "react";
 import { UPDATE_TRANSACTION } from "../../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
@@ -17,8 +21,12 @@ export const FormUpdate = () => {
   const navigate = useNavigate();
 
   //use mutation for form inputupdate  for mutation
-  const [updateTransaction, { loading: loadingUpdate }] =
-    useMutation(UPDATE_TRANSACTION);
+  const [updateTransaction, { loading: loadingUpdate }] = useMutation(
+    UPDATE_TRANSACTION,
+    {
+      refetchQueries: [GET_CATEGORIES, GET_TRANSACTIONS],
+    }
+  );
 
   const [formUpdate, setFormUpdate] = useState({
     paymentType: data?.transaction?.paymentType || "",

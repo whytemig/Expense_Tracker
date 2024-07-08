@@ -15,6 +15,10 @@ type CategoryTally{
     amount:Float!
 }
 
+type DeleteResponse{
+    message: String!
+}
+
 
 type Query{
     transactions:[Transaction!]!
@@ -24,8 +28,12 @@ type Query{
 type Mutation{
     createTransaction(input: TransactionInput!):Transaction!
     updateTransaction(input:UpdateTransactionInput!):Transaction!
-    deleteTransaction(transactionId:ID!):Transaction! 
+    deleteTransaction(transactionId:ID!):Transaction!
+    deleteAllTransactions:DeleteResponse!
 }
+
+
+
 
 input TransactionInput{
     description:String!
