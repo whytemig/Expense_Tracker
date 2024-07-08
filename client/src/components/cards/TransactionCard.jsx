@@ -5,13 +5,16 @@ import { formatDate } from "../../helper/formatDate";
 import toast from "react-hot-toast";
 import { useMutation } from "@apollo/client";
 import { DELETE_TRANSACTION } from "../../graphql/mutations/transaction.mutation";
-import { GET_TRANSACTIONS } from "../../graphql/query/transaction.query";
+import {
+  GET_CATEGORIES,
+  GET_TRANSACTIONS,
+} from "../../graphql/query/transaction.query";
 
 export const TransactionCard = ({ data }) => {
   let { amount, category, _id, location, date } = data;
 
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION, {
-    refetchQueries: [GET_TRANSACTIONS],
+    refetchQueries: [GET_TRANSACTIONS, GET_CATEGORIES],
   });
 
   async function handledeleteTransaction(id) {

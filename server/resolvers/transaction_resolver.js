@@ -74,7 +74,6 @@ const transactionResolver = {
     createTransaction: async (_, { input }, context) => {
       const userId = await context.getUser()._id;
 
-      console.log(userId);
       try {
         const newTransaction = new Transaction({
           description: input.description,
@@ -112,6 +111,23 @@ const transactionResolver = {
       } catch (error) {
         console.log(error.message);
         throw new Error("Error in deleting Transaction", error.message);
+      }
+    },
+
+    deleteAllTransactions: async (_, __, context) => {
+      const authUser = context.getUser();
+      if (!authUser) {
+        throw new Error("User Unauthorized");
+      }
+
+      const userId = await context.getUser()._id;
+      try {
+        await Transaction.deleteMany({ userId });
+
+        return { message: "All Transactions Deleted!" };
+      } catch (error) {
+        console.log(error.message);
+        throw new Error("Error in deleting All Transactions", error.message);
       }
     },
   },

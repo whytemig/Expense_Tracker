@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-import { TRANSACTION_MUTATION } from "../../graphql/mutations/transaction.mutation";
+import { DELETE_ALL_TRANSACTIONS, TRANSACTION_MUTATION } from "../../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 
 import {
@@ -21,7 +21,7 @@ const Form = () => {
 
   //GRAPHQL FUNC.
   const [createTransaction, { loading }] = useMutation(TRANSACTION_MUTATION, {
-    refetchQueries: [GET_TRANSACTIONS, GET_CATEGORIES],
+    refetchQueries: [GET_TRANSACTIONS, GET_CATEGORIES, DELETE_ALL_TRANSACTIONS],
   });
 
   //submit function
@@ -120,7 +120,7 @@ const Form = () => {
             value={transacForm.category}
             onChange={handleChangle}
           >
-            <option value="">Please choose an option</option>
+            <option value="">Choose an option</option>
             <option value="savings">Savings</option>
             <option value="expense">Expense</option>
             <option value="asset">Asset</option>

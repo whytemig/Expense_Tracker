@@ -6,18 +6,22 @@ function Transactions() {
   const { data, loading } = useQuery(GET_TRANSACTIONS);
 
   return (
-    <div className="grid grid-cols-4 gap-8 p-8 md:p-16 ">
-      {!loading &&
-        data?.transactions.map((trans, indx) => (
-          <TransactionCard data={trans} key={indx} />
-        ))}
-
+    <>
+      <div className="grid grid-cols-4 gap-8 p-8 md:p-16 ">
+        {!loading &&
+          data?.transactions.map((trans, indx) => (
+            <TransactionCard data={trans} key={indx} />
+          ))}
+      </div>
       {!loading && data?.transactions?.length === 0 && (
-        <p className="text-2xl font-bold text-center w-full ">
-          No Transaction Available
-        </p>
+        <div className="text-slate-300 uppercase justify-center w-1/3 mx-auto flex items-center my-[5%]">
+          <h2 className="text-6xl tracking-wide leading-normal text-center">
+            No <br />
+            Transactions <br /> Available
+          </h2>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

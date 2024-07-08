@@ -28,7 +28,7 @@ function Home() {
 
   return (
     <div className="bg-home h-screen flex flex-col">
-      <header className="py-3 text-slate-900 bg-slate-200 sticky top-0 z-10 flex items-center justify-between px-8">
+      <header className="py-3 text-slate-900 bg-slate-200 top-0 z-10 flex items-center justify-between px-8">
         <Link to="/">NAV BAR</Link>
         <div className="flex items-center justify-center gap-3">
           Picture <span>UsernameName</span>
