@@ -7,6 +7,8 @@ import { GET_TRANSACTIONS } from "../../graphql/query/transaction.query";
 function UserInterface() {
   const { data, loading } = useQuery(GET_TRANSACTIONS);
 
+  console.log(data, loading);
+
   return (
     <div className="text-slate-300 flex flex-col">
       <div className="text-6xl text-center p-4">
@@ -15,11 +17,11 @@ function UserInterface() {
 
       <TopButtons />
 
-      <div className="flex justify-evenly mt-4 p-4 flex-wrap items-center px-8 my-2">
-        <div className="p-7 w-[520px] md:min-w-[420px] flex justify-center items-center">
+      <div className="flex flex-col md:flex-row justify-evenly mt-4 p-4 flex-wrap items-center md:px-8 my-2">
+        <div className="p-4 w-full md:w-[520px] md:min-w-[420px] flex justify-center items-center">
           {!loading && data?.transactions?.length === 0 ? (
             <div className="text-slate-300 uppercase items-center justify-center flex text-center w-52 mx-auto">
-              <h2 className="text-6xl tracking-wide leading-normal">
+              <h2 className="text-6xl tracking-wide leading-normal sm:text-4xl md:text-6xl py-4">
                 Tally <br />
                 Your <br /> Transactions!
               </h2>

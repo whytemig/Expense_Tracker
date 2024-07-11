@@ -35,10 +35,10 @@ export const TransactionCard = ({ data }) => {
         {category === "savings" || category === "asset" ? (
           <FaSmileBeam
             size={36}
-            color={category === "savings" ? "green" : "blue"}
+            color={category === "savings" ? "#00FF40" : "#00B9E8"}
           />
         ) : (
-          <ImSad2 size={36} color="red" />
+          <ImSad2 size={36} color="#FE0000" />
         )}
       </span>
       <h2 className="my-1 uppercase tracking-wide font-semibold text-lg">
@@ -52,14 +52,14 @@ export const TransactionCard = ({ data }) => {
       <div className="py-4 flex items-center justify-between gap-5">
         <Link
           to={`${_id}`}
-          className="w-1/2 px-4 py-2 border rounded-lg bg-lime-700 text-slate-300 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out text-center"
+          className="w-1/2 px-4 py-2 border rounded-lg bg-[#00FF40] text-slate-900 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out text-center"
           type="submit"
         >
           UPDATE
         </Link>
 
         <div
-          className="text-center w-1/2 px-4 py-2 border rounded-lg  bg-rose-700 text-slate-300 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out cursor-pointer"
+          className="text-center w-1/2 px-4 py-2 border rounded-lg  bg-[#FE0000] text-slate-300 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out cursor-pointer"
           onClick={() => handledeleteTransaction(_id)}
         >
           Delete

@@ -44,8 +44,8 @@ function Login() {
   return (
     <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed h-screen">
       <div className="bg-slate-900 opacity-95 h-screen w-full relative"></div>
-      <div className="  min-h-screen justify-center items-center flex absolute top-0 left-0 right-0 bottom-0">
-        <div className="max-w-md w-full p-6 px-8 bg-white rounded-lg shadow-lg z-10">
+      <div className="  min-h-screen justify-center items-center flex absolute inset-0">
+        <div className="max-w-md w-full p-6 sm:p-8 bg-white rounded-lg shadow-lg sm:mx-auto sm:w-full sm:max-w-md sm:px-10">
           <h1 className="text-4xl font-bold text-center text-slate-900 mt-8 mb-4">
             Login
           </h1>
@@ -92,7 +92,7 @@ function Login() {
                 required
               />
             </div>
-            <div className="flex items-center justify-between mb-10 gap-3">
+            <div className="flex items-center justify-between sm:flex-row sm:items-center sm:justify-between mb-10 gap-3">
               <span>Don&#39;t t have an Account --&gt;</span>
               <Link
                 to="/signup"

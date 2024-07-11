@@ -70,8 +70,8 @@ function SignUp() {
   return (
     <div className="bg-login bg-no-repeat bg-cover bg-center bg-fixed min-h-full">
       <div className="bg-slate-900 opacity-95 h-screen w-full relative"></div>
-      <div className="  min-h-screen justify-center items-center flex absolute top-0 left-0 right-0 bottom-0">
-        <div className="max-w-md w-full p-6 px-8 bg-white rounded-lg shadow-lg">
+      <div className="  min-h-screen justify-center items-center flex absolute inset-0">
+        <div className="max-w-md w-full p-6 px-8 bg-white rounded-lg shadow-lg sm:p-8">
           <h1 className="text-4xl font-bold text-center text-slate-900 mt-8 mb-6">
             Sign Up
           </h1>

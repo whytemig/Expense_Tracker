@@ -5,15 +5,16 @@ const transactionResolver = {
     //GET ALL TRANSACTIONS
     transactions: async (_, __, context) => {
       const authUser = context.getUser();
+
       if (!authUser) {
         throw new Error("User Unauthorized");
       }
 
       try {
-        const userId = await context.getUser._id;
+        const userId = await context.getUser()._id;
 
         // find the transaction that relates to the User Id of the transaction.
-        const transaction = await Transaction.find(userId).sort({
+        const transaction = await Transaction.find({ userId }).sort({
           updatedAt: -1,
         });
 
