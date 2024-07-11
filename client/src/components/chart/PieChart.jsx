@@ -43,13 +43,13 @@ const PieChart = () => {
 
       arrayOfCategory.forEach((val) => {
         if (val === "savings") {
-          backgroundColor.push("green");
+          backgroundColor.push("#00FF40");
           borderColors.push("green");
         } else if (val === "expense") {
-          backgroundColor.push("red");
+          backgroundColor.push("#FE0000");
           borderColors.push("red");
         } else if (val === "asset") {
-          backgroundColor.push("lightblue");
+          backgroundColor.push("#00B9E8");
           borderColors.push("lightblue");
         }
       });

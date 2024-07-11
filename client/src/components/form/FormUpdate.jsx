@@ -202,7 +202,7 @@ export const FormUpdate = () => {
           />
         </div>
         <button
-          className="w-full px-4 py-2 border rounded-lg bg-lime-700 text-slate-300 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out mt-3"
+          className="w-full px-4 py-2 border rounded-lg bg-[#00FF40] text-slate-900 font-semibold text-lg tracking-wide hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out mt-3"
           type="submit"
           disabled={loadingUpdate}
         >

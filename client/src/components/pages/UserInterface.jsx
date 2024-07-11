@@ -7,6 +7,8 @@ import { GET_TRANSACTIONS } from "../../graphql/query/transaction.query";
 function UserInterface() {
   const { data, loading } = useQuery(GET_TRANSACTIONS);
 
+  console.log(data, loading);
+
   return (
     <div className="text-slate-300 flex flex-col">
       <div className="text-6xl text-center p-4">

@@ -36,14 +36,14 @@ const TopButtons = () => {
       <div className="w-full md:w-auto p-2">
         <Link
           to={"/transactions"}
-          className="block w-full md:w-auto px-6 py-2 border rounded-full bg-lime-700 text-slate-300 font-semibold text-lg tracking-wide text-center hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out"
+          className="block w-full md:w-auto px-6 py-2 border rounded-full bg-[#00FF40] text-slate-900 font-semibold text-lg tracking-wide text-center hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out"
         >
           History
         </Link>
       </div>
       <div className="w-full md:w-auto p-2">
         <button
-          className="block w-full md:w-auto px-6 py-2 border rounded-full bg-rose-700 text-slate-300 font-semibold text-lg tracking-wide text-center hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out cursor-pointer"
+          className="block w-full md:w-auto px-6 py-2 border rounded-full bg-[#FE0000] text-slate-300 font-semibold text-lg tracking-wide text-center hover:text-slate-300 hover:bg-transparent hover:border-slate-300 transition-all duration-300 ease-in-out cursor-pointer"
           disabled={loading}
           onClick={deleteAll}
         >
