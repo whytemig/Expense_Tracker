@@ -8,10 +8,12 @@ import { useMutation } from "@apollo/client";
 import { LOGOUT_USER } from "../../graphql/mutations/logout.mutation";
 import { AUTH_USER } from "../../graphql/query/authUser";
 
-function Home() {
+function Home({ data: userInfoData }) {
   const [logout, { data, client }] = useMutation(LOGOUT_USER, {
     refetchQueries: [AUTH_USER],
   });
+
+  console.log(userInfoData?.authUser?.profilePicture);
 
   //logout function
   async function handleLogout() {
@@ -31,10 +33,21 @@ function Home() {
   return (
     <div className="bg-home h-screen flex flex-col">
       <header className="py-3 text-slate-300 bg-slate-800 top-0 z-10 flex items-center justify-between  px-4 sm:px-8">
-        <Link to="/">NAV BAR</Link>
+        <Link to="/" className="text-xl tracking-wide font-semibold">
+          {"e-t".toUpperCase() + "racker"}
+        </Link>
         <div className="flex items-center justify-center gap-2 sm:gap-3">
-          <div className="w-8 h-8 rounded-full bg-gray-300">Picture</div>
-          <span className="text-sm sm:text-base">UsernameName</span>
+          <div className="w-8 h-8 rounded-full bg-gray-300">
+            <img
+              src={userInfoData?.authUser?.profilePicture}
+              alt="Profile Image of User"
+            />
+          </div>
+          <span className="text-sm sm:text-base hidden md:block">
+            Hello,{" "}
+            {userInfoData?.authUser?.username.charAt(0).toUpperCase() +
+              userInfoData?.authUser?.username.slice(1)}
+          </span>
         </div>
         <div>
           <button onClick={handleLogout} disabled={data} className="">

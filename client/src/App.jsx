@@ -12,7 +12,7 @@ import { AUTH_USER } from "./graphql/query/authUser";
 
 function App() {
   const { data, loading } = useQuery(AUTH_USER, {
-    refetchQueries: ["AuthUser"],
+    refetchQueries: [AUTH_USER],
   });
 
   if (loading) {
@@ -32,7 +32,9 @@ function App() {
         />
         <Route
           path="/"
-          element={data?.authUser ? <Home /> : <Navigate to="/login" />}
+          element={
+            data?.authUser ? <Home data={data} /> : <Navigate to="/login" />
+          }
         >
           <Route
             index

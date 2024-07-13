@@ -11,7 +11,7 @@ import {
 } from "../../graphql/query/transaction.query";
 
 export const TransactionCard = ({ data }) => {
-  let { amount, category, _id, location, date } = data;
+  let { amount, category, _id, location, date, description } = data;
 
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION, {
     refetchQueries: [GET_TRANSACTIONS, GET_CATEGORIES],
@@ -44,7 +44,16 @@ export const TransactionCard = ({ data }) => {
       <h2 className="my-1 uppercase tracking-wide font-semibold text-lg">
         {category?.toUpperCase()}
       </h2>
+
       <p className="py-2 text-center text-3xl">${amount}</p>
+      <div className="flex justify-center items-center m-2">
+        <textarea
+          disabled={true}
+          className=" border rounded-lg p-1 bg-transparent text-lg"
+        >
+          {description}
+        </textarea>
+      </div>
       <div className="flex items-center justify-between gap-3">
         <span>{location ? location : "Not Available"}</span>
         <span>{formatDate(date)}</span>

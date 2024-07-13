@@ -40,6 +40,7 @@ const store = new MongoDBStore({
 //error handling
 store.on("error", (error) => console.log(error));
 
+//storing the session in the mongodb database
 app.use(
   session({
     secret: process.env.MY_SECRET,
@@ -60,6 +61,7 @@ app.use(passport.session());
 // for our httpServer.
 passportInitialize();
 
+//Based on the documentary
 const server = new ApolloServer({
   typeDefs: mergedTypes,
   resolvers: mergedResolvers,
