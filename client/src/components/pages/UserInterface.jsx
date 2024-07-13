@@ -15,7 +15,7 @@ function UserInterface() {
         <h1 className="">Track My Wallet</h1>
       </div>
 
-      <TopButtons />
+      {data?.transactions?.length > 0 && <TopButtons />}
 
       <div className="flex flex-col md:flex-row justify-evenly mt-4 p-4 flex-wrap items-center md:px-8 my-2">
         <div className="p-4 w-full md:w-[520px] md:min-w-[420px] flex justify-center items-center">

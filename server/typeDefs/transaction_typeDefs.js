@@ -1,3 +1,5 @@
+//Type Definition for Transactions with the relation to Category for the Chart
+
 const transactionDefTypes = `#graphql
 type Transaction{
     _id: ID!
