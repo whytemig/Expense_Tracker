@@ -2,13 +2,14 @@ import User from "../database/models/user_models.js";
 import bcrypt from "bcryptjs";
 
 // resolvers for the User
+// with help from the docs about authentification.
 const userResolver = {
   Query: {
     authUser: async (_, __, context) => {
       try {
         // Check if the user is authenticated
         const authUser = await context.getUser();
-        // console.log(authUser);
+        
         if (!authUser) {
           throw new Error("Not authenticated!");
         }

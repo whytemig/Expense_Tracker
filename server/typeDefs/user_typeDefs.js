@@ -1,3 +1,5 @@
+//Type Definitions for the User
+
 const userTypeDefs = `#graphql
 type User{
 _id: ID!

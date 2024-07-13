@@ -46,10 +46,10 @@ export const TransactionCard = ({ data }) => {
       </h2>
 
       <p className="py-2 text-center text-3xl">${amount}</p>
-      <div className="flex justify-center items-center m-2">
+      <div className="">
         <textarea
           disabled={true}
-          className=" border rounded-lg p-1 bg-transparent text-lg"
+          className=" border rounded-lg bg-transparent text-lg text-center w-full py-1 my-auto table-cell justify-center items-center"
         >
           {description}
         </textarea>

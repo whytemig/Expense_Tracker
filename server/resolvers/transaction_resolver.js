@@ -3,6 +3,7 @@ import Transaction from "../database/models/transaction_models.js";
 const transactionResolver = {
   Query: {
     //GET ALL TRANSACTIONS
+    //this could of been done with relationships... just found that out at the end.
     transactions: async (_, __, context) => {
       const authUser = context.getUser();
 
