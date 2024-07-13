@@ -2,6 +2,7 @@
 import express from "express";
 import http from "http";
 import cors from "cors";
+import path from "path";
 //AUTH-SESSION
 import session from "express-session";
 import passport from "passport";
@@ -22,6 +23,7 @@ import dotenv from "dotenv";
 import passportInitialize from "./passport/passport.js";
 
 dotenv.config();
+const __dirname = path.resolve();
 
 // Required logic for integrating with Express
 const app = express();
@@ -84,6 +86,12 @@ app.use(
     context: async ({ req, res }) => buildContext({ req, res }),
   })
 );
+
+app.use(express.static(path.join(__dirname, "client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+});
 
 await connectDB();
 httpServer.listen(4000, () => {
