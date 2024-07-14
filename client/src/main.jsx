@@ -6,7 +6,10 @@ import { BrowserRouter } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri:
+    import.meta.env.VITE_NODE_ENV === "development"
+      ? "http://localhost:4000/graphql"
+      : "/graphql",
   //cache the query results
   cache: new InMemoryCache(),
   //Tells Apollo client tosend cookies along with every request to the server
