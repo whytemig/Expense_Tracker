@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   GET_CATEGORIES,
-  GET_TRANSACTIONS,
   GET_TRANSACTIONS_BY_ID,
 } from "../../graphql/query/transaction.query";
 import { useEffect, useState } from "react";
@@ -24,7 +23,7 @@ export const FormUpdate = () => {
   const [updateTransaction, { loading: loadingUpdate }] = useMutation(
     UPDATE_TRANSACTION,
     {
-      refetchQueries: [GET_CATEGORIES, GET_TRANSACTIONS],
+      refetchQueries: [{ query: GET_CATEGORIES }],
     }
   );
 
