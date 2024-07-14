@@ -87,13 +87,16 @@ app.use(
   })
 );
 
+// deployment features--- has nothing to do with the App
+
 app.use(express.static(path.join(__dirname, "client/dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/dist", "index.html"));
 });
 
-await connectDB();
+//new server with socketio listening to the port.
 httpServer.listen(4000, () => {
+  connectDB();
   console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 });
