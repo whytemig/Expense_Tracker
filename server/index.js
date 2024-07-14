@@ -22,6 +22,11 @@ import dotenv from "dotenv";
 
 import passportInitialize from "./passport/passport.js";
 
+import job from "./cron.js";
+// Cron job scheduled request for render slow free tier service
+
+job.start();
+
 dotenv.config();
 const __dirname = path.resolve();
 
