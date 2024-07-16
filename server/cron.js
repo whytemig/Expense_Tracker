@@ -1,22 +1,22 @@
-// import cron from "cron";
-// import https from "https";
+import cron from "cron";
+import https from "https";
 
-// const URL = "https://etracker-tsio.onrender.com/";
+const URL = "https://etracker-tsio.onrender.com/";
 
-// const job = new cron.CronJob("*/45 * * * *", function () {
-//   https
-//     .get(URL, (res) => {
-//       if (res.statusCode === 200) {
-//         console.log("GET request sent successfully");
-//       } else {
-//         console.log("GET request failed", res.statusCode);
-//       }
-//     })
-//     .on("error", (e) => {
-//       console.error("Error while sending request", e);
-//     });
-// });
+const job = new cron.CronJob("*/45 * * * *", function () {
+  https
+    .get(URL, (res) => {
+      if (res.statusCode === 200) {
+        console.log("GET request sent successfully");
+      } else {
+        console.log("GET request failed", res.statusCode);
+      }
+    })
+    .on("error", (e) => {
+      console.error("Error while sending request", e);
+    });
+});
 
-// export default job;
+export default job;
 
 // comments
