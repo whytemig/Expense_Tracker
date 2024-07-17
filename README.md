@@ -33,7 +33,7 @@ Welcome to the MERN GraphQl Expense App - This project was created to utilize th
 
 ### Passport
 
-[Passport](/images/passort_image_notes.png)
+![Passport](/images/passort_image_notes.png)
 
 ### Build the app
 
