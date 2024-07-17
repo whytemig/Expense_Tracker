@@ -2,7 +2,7 @@
 
 Welcome to the MERN GraphQl Expense App - This project was created to utilize the power of GraphQl, Passport login features, and MongoDB Session Storage.
 
-[App Demo](https://etracker-tsio.onrender.com/)
+[ETracker.com](https://etracker-tsio.onrender.com/)
 
 ## Login Page
 
