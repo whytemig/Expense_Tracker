@@ -6,19 +6,19 @@ Welcome to the MERN GraphQl Expense App - This project was created to utilized t
 
 ## Login Page
 
-[Login Page](/images/screenshots/login.page.png)
+![Login Page](/images/screenshots/login.page.png)
 
 ## Home Page
 
-[Home Page](/images/screenshots/home.page.png)
+![Home Page](/images/screenshots/home.page.png)
 
 ## Expense Card
 
-[Transaction History](/images/screenshots/transaction.page.png)
+![Transaction History](/images/screenshots/transaction.page.png)
 
 ## Update Page
 
-[Update Page](/images/screenshots/update.page.png)
+![Update Page](/images/screenshots/update.page.png)
 
 ## Features:
 
